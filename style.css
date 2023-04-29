@@ -1,0 +1,146 @@
+  @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sunflower', sans-serif;
+    font-weight : 700;
+
+}
+html {
+    height: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+    max-width: 100%;
+    margin: 0 auto;    
+}
+
+header {
+    position: fixed;
+    top: 0; left: 0;
+    height: 100px;
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+footer {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 50px;
+    width: 100%;
+    background-color: #ddd;
+    vertical-align: middle;
+    font-weight : 300;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+/* 하단 날짜*/
+#today{
+    font-weight : 700;
+    font-size: 1.7rem;
+}
+
+main {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        height: 70%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: repeat(7, 1fr);
+}
+div{
+    display: flex;
+    justify-content : center;
+    align-items: center;
+}
+div.label {
+    font-size: 2rem;
+}
+div.state {
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+div.city {
+    grid-column-start: 6;
+    grid-column-end: 9;
+}
+div.number-result {
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+
+select {
+    border: none;
+    font-size: 2rem;
+    height: 70px;
+    text-align: center;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px;
+    background-color: #dfe6e9;
+    border-width: medium;
+    border-style: solid;
+}
+
+
+button {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: #f5f6fa;
+  display: inline-block;
+  border: none;
+  width: 100%;
+  margin: 5px;
+  height: 70px;
+  border-radius: 5px;
+}
+
+button.confirm{
+    background-color: #27ae60;    
+}
+button.reset {
+    background-color: #c0392b;    
+}
+button.minus {
+    background-color: #e74c3c;
+}
+button.plus-1, button.plus-5 {
+    background-color: #3498db;
+
+}
+button.plus-2, button.plus-10 {
+    background-color: #2980b9;
+}
+
+input{
+    margin: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 2.5rem;
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+
+input.result-sum {
+    font-size: 3rem;
+    border-width: medium;
+    border-style: solid;
+    border-radius: 5px;
+    height: 70px;
+}
+
