@@ -53,7 +53,7 @@
       </div>
       <div class="city">
         <select name="cityList" id="city_list">
-          <option value="0" selected>수원시</option>
+          <option value="0" selected>의정부시</option>
           <option value="1">가평군</option>
           <option value="2">고양시</option>
           <option value="3">과천시</option>
@@ -66,8 +66,9 @@
           <option value="10">동두천시</option>
           <option value="11">부천시</option>
           <option value="12">성남시</option>
-          <option value="13">시흥시</option>
-          <option value="14">안산시</option>
+          <option value="13">수원시</option>
+          <option value="14">시흥시</option>
+          <option value="15">안산시</option>
           <option value="15">안성시</option>
           <option value="16">안양시</option>
           <option value="17">양주시</option>
@@ -77,7 +78,6 @@
           <option value="21">오산시</option>
           <option value="22">용인시</option>
           <option value="23">의왕시</option>
-          <option value="24">의정부시</option>
           <option value="25">이천시</option>
           <option value="26">파주시</option>
           <option value="27">평택시</option>
@@ -199,7 +199,34 @@
       </div>
       <div class="blank"><!--좌우 공백--></div>
       <div class="blank"><!--좌우 공백--></div>
-      <div class="label">성인</div>
+      <div class="label">교사</div>
+      <div class="button-number">
+        <button class="minus" onclick="minus('result_teacher')">-1</button>
+      </div>
+      <div class="number">
+        <input
+          class="result"
+          id="result_teacher"
+          type="number"
+          value="0"
+          readonly
+        />
+      </div>
+      <div class="button-number">
+        <button class="plus-1" onclick="plus('result_teacher',1)">+1</button>
+      </div>
+      <div class="button-number">
+        <button class="plus-2" onclick="plus('result_teacher',2)">+2</button>
+      </div>
+      <div class="button-number">
+        <button class="plus-5" onclick="plus('result_teacher',5)">+5</button>
+      </div>
+      <div class="button-number">
+        <button class="plus-10" onclick="plus('result_teacher',10)">+10</button>
+      </div>
+      <div class="blank"><!--좌우 공백--></div>
+      <div class="blank"><!--좌우 공백--></div>
+      <div class="label">일반</div>
       <div class="button-number">
         <button class="minus" onclick="minus('result_adult')">-1</button>
       </div>

@@ -57,7 +57,7 @@ main {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(9, 1fr);
-        grid-template-rows: repeat(7, 1fr);
+        grid-template-rows: repeat(8, 1fr);
 }
 div{
     display: flex;

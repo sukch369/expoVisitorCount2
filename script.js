@@ -6,7 +6,8 @@ let result_kind = document.getElementById("result_kind"); // 유치원 인원수
 let result_ele = document.getElementById("result_ele"); //초등학생 인원수
 let result_mid = document.getElementById("result_mid"); //중학생 인원수
 let result_high = document.getElementById("result_high"); //고등학생 인원수
-let result_adult = document.getElementById("result_adult"); //성인 인원수
+let result_adult = document.getElementById("result_adult"); //일반 인원수
+let result_teacher = document.getElementById("result_teacher"); //일반 인원수
 let result_sum = document.getElementById("result_sum"); //합계 인원수
 let fulldate = new Date();
 //보낼 날짜
@@ -33,7 +34,7 @@ today.innerHTML =
 let stateCityList = new Object();
 //구글 링크
 const inputURL =
-  "https://script.google.com/macros/s/AKfycbwcr95sVJZHktpatokoXEM0jg_n4K1P0wl5aqczOVwjXbzGaGtnisBZkhSaJFZzm9c9/exec";
+  "https://script.google.com/macros/s/AKfycbzpqGoUieqM4_OStXLOeYNAyOhEJbBwQm3EiNYAInLVDUXdHKgpf32_kS-WOadXJW1Kow/exec";
 const listURL = "stateCityList.json";
 
 window.onload = function () {
@@ -102,17 +103,19 @@ function sum() {
     Number(result_ele.value) +
     Number(result_mid.value) +
     Number(result_high.value) +
-    Number(result_adult.value);
+    Number(result_adult.value) +
+    Number(result_teacher.value);
 }
 
 function reset() {
   state_list.value = 8;
-  city_list.value = 0;
+  loadCity(state_list.value);
   result_kind.value = 0;
   result_ele.value = 0;
   result_mid.value = 0;
   result_high.value = 0;
   result_adult.value = 0;
+  result_teacher.value = 0;
   sum();
 }
 //확인 함수
@@ -137,7 +140,10 @@ function confirmMessage() {
     "고등학생 (",
     result_high.value,
     "명)\n",
-    "성인     (",
+    "교사     (",
+    result_teacher.value,
+    "명)\n",
+    "일반     (",
     result_adult.value,
     "명)\n",
     "총 (",
@@ -173,6 +179,8 @@ function sendData() {
     result_high.value,
     "&adult=",
     result_adult.value,
+    "&teacher=",
+    result_teacher.value,
     "&sum=",
     result_sum.value,
     "&today=",
