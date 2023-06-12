@@ -10,6 +10,13 @@ let result_adult = document.getElementById("result_adult"); //일반 인원수
 let result_teacher = document.getElementById("result_teacher"); //일반 인원수
 let result_sum = document.getElementById("result_sum"); //합계 인원수
 let fulldate = new Date();
+
+//구글 링크
+const inputURL =
+  "https://script.google.com/macros/s/AKfycbzpqGoUieqM4_OStXLOeYNAyOhEJbBwQm3EiNYAInLVDUXdHKgpf32_kS-WOadXJW1Kow/exec";
+const DBoutputURL =
+  "https://script.google.com/macros/s/AKfycbyvEW2wXypcIQlvTly73QZeuNKauANLhSwnaFtH7Y9djQ2x0KaHXn03UO2aJLiHUPfOag/exec?sheetName=count";
+
 //보낼 날짜
 let sendToday =
   fulldate.getFullYear() +
@@ -17,28 +24,52 @@ let sendToday =
   Number(fulldate.getMonth() + 1) +
   "-" +
   fulldate.getDate();
+
 //출력 날짜
 const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"];
 let today = document.getElementById("today");
-today.innerHTML =
-  fulldate.getFullYear() +
-  "년" +
-  Number(fulldate.getMonth() + 1) +
-  "월" +
-  fulldate.getDate() +
-  "일" +
-  " (" +
-  WEEKDAY[fulldate.getDay()] +
-  ") ";
+function inputTime() {
+  today.innerHTML =
+    fulldate.getFullYear() +
+    "년" +
+    Number(fulldate.getMonth() + 1) +
+    "월" +
+    fulldate.getDate() +
+    "일" +
+    " (" +
+    WEEKDAY[fulldate.getDay()] +
+    ") ";
+}
+inputTime();
 
-let stateCityList = new Object();
-//구글 링크
-const inputURL =
-  "https://script.google.com/macros/s/AKfycbzpqGoUieqM4_OStXLOeYNAyOhEJbBwQm3EiNYAInLVDUXdHKgpf32_kS-WOadXJW1Kow/exec";
+let stateCityList = new Object(); //시도 목록 객체
+
+//인원수 통계
+let countRaw;
+let countParse = new Object();
+//방문자 수 불러오기
+function getData() {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", DBoutputURL, true);
+  xhr.send();
+  xhr.onload = () => {
+    if (xhr.status == 200) {
+      countRaw = xhr.response;
+      countParse = JSON.parse(countRaw);
+      countParse = countParse[0].today;
+      countData.innerText = "오늘의 방문자: " + countParse + "명";
+    } else {
+      //failed
+      console.log("실패");
+    }
+  };
+}
+
 const listURL = "stateCityList.json";
 
 window.onload = function () {
   getStateCityList();
+  getData();
 };
 
 //지역 불러오기 from json
@@ -60,24 +91,28 @@ getStateCityList();
 
 //시군구 불러오기
 function loadCity(e) {
-  let h = [];
+  if (e == "none") {
+    city_list.innerHTML = '<option value="none">골라주세요</option>';
+  } else {
+    let h = [];
 
-  for (let i = 0; i < Object.keys(stateCityList[e].city).length; i++) {
-    if (i == 0) {
-      h.push(
-        '<option value="' +
-          i +
-          '"selected>' +
-          stateCityList[e].city[i] +
-          "</option>"
-      );
-    } else {
-      h.push(
-        '<option value="' + i + '">' + stateCityList[e].city[i] + "</option>"
-      );
+    for (let i = 0; i < Object.keys(stateCityList[e].city).length; i++) {
+      if (i == 0) {
+        h.push(
+          '<option value="' +
+            i +
+            '"selected>' +
+            stateCityList[e].city[i] +
+            "</option>"
+        );
+      } else {
+        h.push(
+          '<option value="' + i + '">' + stateCityList[e].city[i] + "</option>"
+        );
+      }
     }
+    city_list.innerHTML = h.join("");
   }
-  city_list.innerHTML = h.join("");
 }
 
 function plus(button, number) {
@@ -117,45 +152,51 @@ function reset() {
   result_adult.value = 0;
   result_teacher.value = 0;
   sum();
+  getData;
 }
 //확인 함수
 function confirmMessage() {
-  sum();
-  let area1 = stateCityList[state_list.value].state;
-  let area2 = stateCityList[state_list.value].city[city_list.value];
-  let message = "".concat(
-    area1,
-    " ",
-    area2,
-    "\n",
-    "유치원   (",
-    result_kind.value,
-    "명)\n",
-    "초등학생 (",
-    result_ele.value,
-    "명)\n",
-    "중학생   (",
-    result_mid.value,
-    "명)\n",
-    "고등학생 (",
-    result_high.value,
-    "명)\n",
-    "교사     (",
-    result_teacher.value,
-    "명)\n",
-    "일반     (",
-    result_adult.value,
-    "명)\n",
-    "총 (",
-    result_sum.value,
-    "명) 이 맞습니까?"
-  );
-  let confirmflag = confirm(message);
-  if (confirmflag) {
-    sendData();
+  if (state_list.value == "none" || city_list.value == "none") {
+    alert("방문하신 지역을 골라주세요.");
     reset();
   } else {
-    reset();
+    sum();
+    let area1 = stateCityList[state_list.value].state;
+    let area2 = stateCityList[state_list.value].city[city_list.value];
+    let message = "".concat(
+      area1,
+      " ",
+      area2,
+      "\n",
+      "유치원   (",
+      result_kind.value,
+      "명)\n",
+      "초등학생 (",
+      result_ele.value,
+      "명)\n",
+      "중학생   (",
+      result_mid.value,
+      "명)\n",
+      "고등학생 (",
+      result_high.value,
+      "명)\n",
+      "교사     (",
+      result_teacher.value,
+      "명)\n",
+      "일반     (",
+      result_adult.value,
+      "명)\n",
+      "총 (",
+      result_sum.value,
+      "명) 이 맞습니까?"
+    );
+    let confirmflag = confirm(message);
+    if (confirmflag) {
+      sendData();
+      reset();
+    } else {
+      reset();
+    }
   }
 }
 
