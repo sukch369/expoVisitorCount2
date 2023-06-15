@@ -143,7 +143,7 @@ function sum() {
 }
 
 function reset() {
-  state_list.value = 8;
+  state_list.value = "none";
   loadCity(state_list.value);
   result_kind.value = 0;
   result_ele.value = 0;
@@ -152,7 +152,7 @@ function reset() {
   result_adult.value = 0;
   result_teacher.value = 0;
   sum();
-  getData;
+  getData();
 }
 //확인 함수
 function confirmMessage() {
